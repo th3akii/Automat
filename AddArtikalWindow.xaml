@@ -1,0 +1,83 @@
+<Window x:Class="Vending_Machine.AddArtikalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Dodaj Artikal" Height="500" Width="420"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize"
+        Background="#FFF"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    <Viewbox Stretch="Uniform">
+        <Border CornerRadius="12" Background="White" Padding="24" BorderBrush="#EEE" BorderThickness="1" Width="379">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <TextBlock x:Name="TitleText" Text="Dodaj Artikal na Poziciju 3-1"
+                               FontSize="20" FontWeight="SemiBold" Foreground="#222"/>
+                    <Button Content="✕"
+                            Width="32" Height="32"
+                            Background="Transparent" BorderThickness="0"
+                            Foreground="#444" FontSize="16"
+                            Cursor="Hand"
+                            Click="Close_Click"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"/>
+                </Grid>
+                <StackPanel Grid.Row="1" Margin="0,24,0,40" Grid.RowSpan="2">
+                    <TextBlock Text="Naziv" FontWeight="SemiBold" Margin="0,0,0,2"/>
+                    <TextBox x:Name="Naziv" FontSize="14"
+                             Background="#F5F6FA" BorderBrush="#EEE" BorderThickness="1"
+                             Padding="8,0" ToolTip="npr. Coca Cola"/>
+
+                    <TextBlock Text="Rok Trajanja" FontWeight="SemiBold" Margin="0,8,0,2"/>
+                    <DatePicker x:Name="RokTrajanja"
+                                FontSize="14"
+                                Background="#F5F6FA"
+                                BorderBrush="#EEE"
+                                BorderThickness="1"
+                                Padding="8,0"
+                                SelectedDateFormat="Short"/>
+
+                    <TextBlock Text="Cena (RSD)" FontWeight="SemiBold" Margin="0,8,0,2"/>
+                    <TextBox x:Name="Cena" FontSize="14"
+                             Background="#F5F6FA" BorderBrush="#EEE" BorderThickness="1"
+                             Padding="8,0" ToolTip="0.00"/>
+
+                    <TextBlock Text="Težina (g)" FontWeight="SemiBold" Margin="0,8,0,2"/>
+                    <TextBox x:Name="Tezina" FontSize="14"
+                             Background="#F5F6FA" BorderBrush="#EEE" BorderThickness="1"
+                             Padding="8,0" ToolTip="npr. 100"/>
+
+
+                    <TextBlock Text="Dan Popusta" FontWeight="SemiBold" Margin="0,8,0,2"/>
+                    <ComboBox x:Name="DanPopusta" FontSize="14"
+                              Background="#F5F6FA" BorderBrush="#EEE" BorderThickness="1"
+                              Padding="8,0" SelectedIndex="0">
+                        <ComboBoxItem Content="Ponedeljak"/>
+                        <ComboBoxItem Content="Utorak"/>
+                        <ComboBoxItem Content="Sreda"/>
+                        <ComboBoxItem Content="Četvrtak"/>
+                        <ComboBoxItem Content="Petak"/>
+                        <ComboBoxItem Content="Subota"/>
+                        <ComboBoxItem Content="Nedelja"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Procenat Popusta (%)" FontWeight="SemiBold" Margin="0,8,0,2"/>
+                    <TextBox x:Name="Popust" FontSize="14"
+                             Background="#F5F6FA" BorderBrush="#EEE" BorderThickness="1"
+                             Padding="8,0"/>
+                </StackPanel>
+                <Button Grid.Row="2" Content="Dodaj Artikal" Margin="0,16,0,8"
+                        Background="#11111A" Foreground="White" FontWeight="SemiBold"
+                        FontSize="16" BorderThickness="0" Cursor="Hand"
+                        Click="DodajArtikal_Click"/>
+            </Grid>
+        </Border>
+    </Viewbox>
+</Window>
