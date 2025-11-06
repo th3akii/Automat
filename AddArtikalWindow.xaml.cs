@@ -16,6 +16,9 @@ using System.Windows.Shapes;
 
 namespace Vending_Machine
 {
+    /// <summary>
+    /// Interaction logic for AddArtikalWindow.xaml
+    /// </summary>
     public partial class AddArtikalWindow : Window
     {
         public Artikal NoviArtikal { get; set; }

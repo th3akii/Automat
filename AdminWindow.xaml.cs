@@ -15,6 +15,9 @@ using Application = System.Windows.Application;
 
 namespace Vending_Machine
 {
+    /// <summary>
+    /// Interaction logic for AdminWindow.xaml
+    /// </summary>
     public partial class AdminWindow : Window
     {
         Kasa kasa = new Kasa();
@@ -108,7 +111,7 @@ namespace Vending_Machine
             }
         }
 
-        public void UkloniArtikal(int artikalID)
+        private void UkloniArtikal(int artikalID)
         {
             int row = artikalID / 10;
             int col = artikalID % 10;
@@ -117,12 +120,33 @@ namespace Vending_Machine
             var namePolje = this.FindName($"AdminName_{pozicijaID}") as TextBlock;
             var sizePolje = this.FindName($"AdminSize_{pozicijaID}") as TextBlock;
             var rokPolje = this.FindName($"AdminRok_{pozicijaID}") as TextBlock;
-            var countBlock = this.FindName($"AdminCount_{pozicijaID}") as TextBlock;
+            var countPolje = this.FindName($"AdminCount_{pozicijaID}") as TextBlock;
 
-            if (namePolje != null) namePolje.Text = "Prazno";
-            if (sizePolje != null) sizePolje.Text = "/";
-            if (rokPolje != null) rokPolje.Text = "/";
-            if (countBlock != null) countBlock.Text = "0 artikla";
+            if (countPolje != null)
+            {
+                int index = (row - 1) * 4 + (col - 1);
+                if (Artikal.artikli != null && index < Artikal.artikli.Count)
+                {
+                    int count = Artikal.artikli[index].Count;
+                    if (count == 1)
+                    {
+                        rokPolje.Text = Artikal.GetArtikalIzSlota(artikalID).rokTrajanja.ToString("dd/MM/yy");
+                        countPolje.Text = $"{count} artikal";
+                    }
+                    else if (count > 1)
+                    {
+                        rokPolje.Text = Artikal.GetArtikalIzSlota(artikalID).rokTrajanja.ToString("dd/MM/yy");
+                        countPolje.Text = $"{count} artikla";
+                    }
+                    else
+                    {
+                        if (namePolje != null) namePolje.Text = "Prazno";
+                        if (sizePolje != null) sizePolje.Text = "/";
+                        if (rokPolje != null) rokPolje.Text = "/";
+                        countPolje.Text = "0 artikla";
+                    }
+                }
+            }
         }
 
         private void AdminAdd_Click(object sender, RoutedEventArgs e)
@@ -187,6 +211,26 @@ namespace Vending_Machine
 
         }
 
+        private void AdminRemove_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn == null) return;
+            string pozicija = btn.Tag as string;
+            if (pozicija == null) return;
+            int id = int.Parse(pozicija.Replace("-", ""));
+            Artikal artikal = Artikal.GetArtikalIzSlota(id);
+            if (artikal != null)
+            {
+                Artikal.UkloniArtikalIzSlota(id);
+                AzurirajMainWindow(artikal);
+                UkloniArtikal(id);
+            }
+            else
+            {
+                MessageBox.Show("Nema artikla za uklanjanje na odabranoj poziciji.");
+            }
+        }
+
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Uspešno ste se izlogovali.");
@@ -228,6 +272,7 @@ namespace Vending_Machine
             if (Kolicina200 != null) Kolicina200.Text = Convert.ToString(kasa.getKolicina(200));
             if (Kolicina500 != null) Kolicina500.Text = Convert.ToString(kasa.getKolicina(500));
         }
+
         private void AzurirajUkupno()
         {
             var UkupnoNovca = this.FindName($"Ukupno") as TextBlock;
@@ -337,6 +382,163 @@ namespace Vending_Machine
             if (Dodaj200 != null) Dodaj200.Text = "0";
             if (Dodaj500 != null) Dodaj500.Text = "0";
 
+            RefreshNovac();
+        }
+
+        private void UzmiNovac_Click(object sender, RoutedEventArgs e)
+        {
+            var Uzmi10 = this.FindName($"Uzmi_10") as TextBox;
+            var Uzmi20 = this.FindName($"Uzmi_20") as TextBox;
+            var Uzmi50 = this.FindName($"Uzmi_50") as TextBox;
+            var Uzmi100 = this.FindName($"Uzmi_100") as TextBox;
+            var Uzmi200 = this.FindName($"Uzmi_200") as TextBox;
+            var Uzmi500 = this.FindName($"Uzmi_500") as TextBox;
+
+            if (Uzmi10 != null && int.TryParse(Uzmi10.Text, out int kolicina10))
+            {
+                if (kolicina10 < 0)
+                {
+                    MessageBox.Show("Unesite validan broj za novčanice od 10.");
+                    return;
+                }
+                if (kolicina10 > kasa.getKolicina(10))
+                {
+                    kolicina10 = kasa.getKolicina(10);
+                    for (int i = 0; i < kolicina10; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(10);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < kolicina10; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(10);
+                    }
+                }
+            }
+            if (Uzmi20 != null && int.TryParse(Uzmi20.Text, out int kolicina20))
+            {
+                if (kolicina20 < 0)
+                {
+                    MessageBox.Show("Unesite validan broj za novčanice od 20.");
+                    return;
+                }
+                if (kolicina20 > kasa.getKolicina(20))
+                {
+                    kolicina20 = kasa.getKolicina(20);
+                    for (int i = 0; i < kolicina20; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(20);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < kolicina20; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(20);
+                    }
+                }
+            }
+            if (Uzmi50 != null && int.TryParse(Uzmi50.Text, out int kolicina50))
+            {
+                if (kolicina50 < 0)
+                {
+                    MessageBox.Show("Unesite validan broj za novčanice od 50.");
+                    return;
+                }
+                if (kolicina50 > kasa.getKolicina(50))
+                {
+                    kolicina50 = kasa.getKolicina(50);
+                    for (int i = 0; i < kolicina50; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(50);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < kolicina50; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(50);
+                    }
+                }
+            }
+            if (Uzmi100 != null && int.TryParse(Uzmi100.Text, out int kolicina100))
+            {
+                if (kolicina100 < 0)
+                {
+                    MessageBox.Show("Unesite validan broj za novčanice od 100.");
+                    return;
+                }
+                if (kolicina100 > kasa.getKolicina(100))
+                {
+                    kolicina100 = kasa.getKolicina(100);
+                    for (int i = 0; i < kolicina100; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(100);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < kolicina100; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(100);
+                    }
+                }
+            }
+            if (Uzmi200 != null && int.TryParse(Uzmi200.Text, out int kolicina200))
+            {
+                if (kolicina200 < 0)
+                {
+                    MessageBox.Show("Unesite validan broj za novčanice od 200.");
+                    return;
+                }
+                if (kolicina200 > kasa.getKolicina(200))
+                {
+                    kolicina200 = kasa.getKolicina(200);
+                    for (int i = 0; i < kolicina200; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(200);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < kolicina200; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(200);
+                    }
+                }
+            }
+            if (Uzmi500 != null && int.TryParse(Uzmi500.Text, out int kolicina500))
+            {
+                if (kolicina500 < 0)
+                {
+                    MessageBox.Show("Unesite validan broj za novčanice od 500.");
+                    return;
+                }
+                if (kolicina500 > kasa.getKolicina(500))
+                {
+                    kolicina500 = kasa.getKolicina(500);
+                    for (int i = 0; i < kolicina500; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(500);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < kolicina500; i++)
+                    {
+                        kasa.UkloniNovcaniceAdmin(500);
+                    }
+                }
+            }
+
+            if (Uzmi10 != null) Uzmi10.Text = "0";
+            if (Uzmi20 != null) Uzmi20.Text = "0";
+            if (Uzmi50 != null) Uzmi50.Text = "0";
+            if (Uzmi100 != null) Uzmi100.Text = "0";
+            if (Uzmi200 != null) Uzmi200.Text = "0";
+            if (Uzmi500 != null) Uzmi500.Text = "0";
             RefreshNovac();
         }
     }

@@ -90,6 +90,7 @@
                         </Button>
                     </UniformGrid>
 
+                    <!-- Info row -->
                     <StackPanel Orientation="Horizontal" Margin="6,12,0,0" VerticalAlignment="Center">
                         <TextBlock Text="ⓘ" Foreground="#4B5563" FontSize="14" Margin="0,0,8,0" VerticalAlignment="Center"/>
                         <TextBlock x:Name="AllowedNotesText" Text="Dozvoljena novčanice: 10, 20, 50, 100, 200, 500 RSD" Foreground="#6B7280" FontSize="13" TextWrapping="Wrap" VerticalAlignment="Center"/>

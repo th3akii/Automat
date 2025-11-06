@@ -14,6 +14,9 @@ using System.Windows.Shapes;
 
 namespace Vending_Machine
 {
+    /// <summary>
+    /// Interaction logic for AddMoney.xaml
+    /// </summary>
     public partial class AddMoney : Window
     {
         private Kasa kasa;

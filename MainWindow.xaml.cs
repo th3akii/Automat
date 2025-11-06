@@ -13,6 +13,11 @@ using System.Windows.Shapes;
 
 namespace Vending_Machine
 {
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    /// 
+
     public partial class MainWindow : Window
     {
         private Kasa kasa = new Kasa();
@@ -34,7 +39,7 @@ namespace Vending_Machine
             }
         }
 
-        //strelice
+        //logika za strelice
         private void RowUp_Click(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(RowTextBox.Text, out int value))
@@ -88,8 +93,8 @@ namespace Vending_Machine
                 ColumnTextBox.Text = "4";
             }
         }
-        
-        //za enter
+
+        //radi na enter i proverava da li je izmedju 1 i 3/4
         private void RowTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

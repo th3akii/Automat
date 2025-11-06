@@ -70,9 +70,19 @@ namespace Vending_Machine
             ukupno += novcanica;
         }
 
-        public void UkloniNovcanice(int cena)
+        public void UkloniNovcaniceAdmin(int novcanica)
         {
+            int row = pronadjiRed(novcanica);
+            if (row >= 0)
+            {
+                novcanice[row, 1]--;
+            }
+            else
+            {
+                MessageBox.Show("Nepoznat novcanica!");
+            }
 
+            ukupno -= novcanica;
         }
 
         private void AzurirajMainWindow(double novac)
