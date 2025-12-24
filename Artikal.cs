@@ -37,18 +37,23 @@ namespace Vending_Machine
             this.tezina = tezina;
             this.dan = dan;
             this.popust = popust;
-            this.cena = calculatePrice(cena);
+            this.cena = cena;
 
             DodajArtikalUSlot(this);
         }
 
-        public double calculatePrice(double cena)
+        public double izracunajCenu(double cena)
         {
             if (DateTime.Today.DayOfWeek == this.dan)
             {
                 return cena - (cena * popust / 100);
             }
             return cena;
+        }
+
+        public double GetCena()
+        {
+            return izracunajCenu(this.cena);
         }
 
         private static void DodajArtikalUSlot(Artikal artikal)

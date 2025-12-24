@@ -156,14 +156,15 @@ namespace Vending_Machine
 
             if (kupljenArtikal != null)
             {
-                if (kasa.kredit < kupljenArtikal.cena)
+                double cenaZaNaplatu = kupljenArtikal.GetCena();
+                if (kasa.kredit < cenaZaNaplatu)
                 {
                     MessageBox.Show("Nemas dovoljno novca!");
                     return;
                 }
                 else
                 {
-                    kasa.kredit -= Convert.ToInt32(kupljenArtikal.cena);
+                    kasa.kredit -= Convert.ToInt32(cenaZaNaplatu);
                     Artikal.UkloniArtikalIzSlota(id);
                     MessageBox.Show($"Uspesno ste kupili artikal: {kupljenArtikal.ime}");
 
@@ -209,7 +210,7 @@ namespace Vending_Machine
             {
                 if (namePolje != null) namePolje.Text = artikal.ime;
                 if (sizePolje != null) sizePolje.Text = artikal.tezina.ToString("F0") + "g";
-                if (pricePolje != null) pricePolje.Text = artikal.cena.ToString();
+                if (pricePolje != null) pricePolje.Text = artikal.GetCena().ToString();
                 if (rokPolje != null) rokPolje.Text = artikal.rokTrajanja.ToString("dd/MM/yy");
                 if (countBlock != null)
                 {
